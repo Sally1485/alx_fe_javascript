@@ -91,8 +91,7 @@ exportButton.textContent = "Export Quotes";
     }
 
     // Event listeners
-    nextButton.addEventListener('click', showNextQuote);
-    exportButton.addEventListener('click', exportQuotes);
+    
 };
 
 <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
@@ -123,4 +122,6 @@ document.getElementById("newQuote").addEventListener("click", showRandomQuote);
      // Add event listener to button
      addButton.addEventListener('click', () => addQuote());
      importFromJsonFile()
+     nextButton.addEventListener('click', showNextQuote);
+    exportButton.addEventListener('click', exportQuotes);
     });   
