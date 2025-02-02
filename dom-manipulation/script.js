@@ -49,11 +49,14 @@ function createAddQuoteForm() {
 function loadQuotes() {
     const storedQuotes = JSON.parse(localStorage.getItem('quotes') || '[]'); // Get saved quotes or default to empty array
     storedQuotes.forEach(quote => addQuote(quote, false)); // Load quotes without re-saving to Local Storage
+            localStorage.setItem('quotes', JSON.stringify(storedQuotes));
+    }
 }
 function addQuote(quoteText = randomQuote.value.trim(), save = true) {
     if (quoteText === '') {
         alert('Please enter a quote');
         return;
+        
     }
 
     let lastViewedIndex = parseInt(sessionStorage.getItem('lastQuoteIndex')) || 0;
