@@ -73,6 +73,7 @@ function addQuote(quoteText = randomQuote.value.trim(), save = true) {
         const quotesJSON = JSON.stringify(quotes, null, 2);
         const blob = new Blob([quotesJSON], { type: "application/json" });
         const url = URL.createObjectURL(blob);
+        const exportButton  =document.createElement('button');
 
         // Create a temporary download link
         const a = document.createElement("a");
