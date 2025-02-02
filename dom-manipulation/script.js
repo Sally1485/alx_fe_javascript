@@ -52,7 +52,7 @@ function loadQuotes() {
             localStorage.setItem('quotes', JSON.stringify(storedQuotes));
     }
 
-function addQuote(quoteText = randomQuote.value.trim(), save = true) {
+function addQuote(quoteText = randomQuote.value.trim(),) {
     if (quoteText === '') {
         alert('Please enter a quote');
         return;
@@ -61,7 +61,7 @@ function addQuote(quoteText = randomQuote.value.trim(), save = true) {
 
     let lastViewedIndex = parseInt(sessionStorage.getItem('lastQuoteIndex')) || 0;
     quoteDisplay.textContent = quotes[lastViewedIndex];
-
+}
     function showNextQuote() {
         lastViewedIndex = (lastViewedIndex + 1) % quotes.length; // Cycle through quotes
         quoteDisplay.textContent = quotes[lastViewedIndex];
@@ -69,7 +69,7 @@ function addQuote(quoteText = randomQuote.value.trim(), save = true) {
         // Store the last viewed quote index in sessionStorage
         sessionStorage.setItem('lastQuoteIndex', lastViewedIndex);
     }
-}
+
     function exportQuotes() {
         const quotesJSON = JSON.stringify(quotes, null, 2);
         const blob = new Blob([quotesJSON], { type: "application/json" });
@@ -87,6 +87,7 @@ function addQuote(quoteText = randomQuote.value.trim(), save = true) {
         URL.revokeObjectURL(url);
         const exportButton = document.createElement("button");
 exportButton.textContent = "Export Quotes";
+document.body.appendChild(exportButton);
 };
 
   
