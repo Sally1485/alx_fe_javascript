@@ -85,10 +85,11 @@ function addQuote(quoteText = randomQuote.value.trim(),) {
         // Clean up
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+    };
         const exportButton = document.createElement("button");
 exportButton.textContent = "Export Quotes";
 document.body.appendChild(exportButton);
-};
+
 
   
 
