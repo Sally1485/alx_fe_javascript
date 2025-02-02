@@ -70,36 +70,26 @@ function addQuote(quoteText = randomQuote.value.trim(), save = true) {
         sessionStorage.setItem('lastQuoteIndex', lastViewedIndex);
     }
     function exportQuotes() {
-        // Convert quotes array to a JSON string
-        const jsonString = JSON.stringify(quotes, null, 2);
-    
-        // Create a Blob with the JSON data
-        const blob = new Blob([jsonString], { type: "application/json" });
-    
-        // Create a temporary URL for the Blob
+        const quotesJSON = JSON.stringify(quotes, null, 2);
+        const blob = new Blob([quotesJSON], { type: "application/json" });
         const url = URL.createObjectURL(blob);
-    
-        // Create a download link
+
+        // Create a temporary download link
         const a = document.createElement("a");
         a.href = url;
-        a.download = "quotes.json"; // File name
-    
-        // Simulate a click to trigger the download
+        a.download = "quotes.json";
         document.body.appendChild(a);
         a.click();
-    
+
         // Clean up
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }
-    
-    // Create the export button
-    const exportButton = document.createElement("button");
-    exportButton.textContent = "Export Quotes";
-    exportButton.addEventListener("click", exportQuotes);
-    
-    // Append the button to the page
-    document.body.appendChild(exportButton);
+
+    // Event listeners
+    nextButton.addEventListener('click', showNextQuote);
+    exportButton.addEventListener('click', exportQuotes);
+});
 
 <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
 
