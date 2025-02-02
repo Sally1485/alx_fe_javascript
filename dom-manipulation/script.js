@@ -51,7 +51,7 @@ function loadQuotes() {
     storedQuotes.forEach(quote => addQuote(quote, false)); // Load quotes without re-saving to Local Storage
             localStorage.setItem('quotes', JSON.stringify(storedQuotes));
     }
-}
+
 function addQuote(quoteText = randomQuote.value.trim(), save = true) {
     if (quoteText === '') {
         alert('Please enter a quote');
@@ -89,7 +89,7 @@ function addQuote(quoteText = randomQuote.value.trim(), save = true) {
     // Event listeners
     nextButton.addEventListener('click', showNextQuote);
     exportButton.addEventListener('click', exportQuotes);
-});
+};
 
 <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
 
@@ -119,4 +119,4 @@ document.getElementById("newQuote").addEventListener("click", showRandomQuote);
      // Add event listener to button
      addButton.addEventListener('click', () => addQuote());
      importFromJsonFile()
-});
+    });   
