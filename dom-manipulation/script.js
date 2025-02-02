@@ -14,7 +14,8 @@ function showRandomQuote() {
     const randomQuote = quotes[randomIndex];
 
     // Display the quote in the HTML
-    document.getElementById("quoteDisplay").innerHTML = `
+    const quoteDisplay =  document.getElementById("quoteDisplay");
+   quoteDisplay.innerHTML = `
         <p>"${randomQuote.text}"</p>
         <small>- ${randomQuote.category}</small>
     `;
@@ -87,9 +88,9 @@ function addQuote(quoteText = randomQuote.value.trim(),) {
         URL.revokeObjectURL(url);
     };
         const exportButton = document.createElement("button");
-exportButton.textContent = "Export Quotes";
-document.body.appendChild(exportButton);
-
+         exportButton.textContent = "Export Quotes";
+            document.body.appendChild(exportButton);
+            exportButton.addEventListener('click', exportQuotes);
 
   
 
@@ -97,7 +98,7 @@ document.body.appendChild(exportButton);
     
 
 
-<input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+
 
     function importFromJsonFile(event) {
         const fileReader = new FileReader();
@@ -121,10 +122,6 @@ document.getElementById("newQuote").addEventListener("click", showRandomQuote);
     createAddQuoteForm();
      // Load quotes when the page loads
      loadQuotes();
-
-     // Add event listener to button
-     addButton.addEventListener('click', () => addQuote());
+    
      importFromJsonFile()
-     nextButton.addEventListener('click', showNextQuote);
-    exportButton.addEventListener('click', exportQuotes);
     });   
