@@ -69,6 +69,7 @@ function addQuote(quoteText = randomQuote.value.trim(), save = true) {
         // Store the last viewed quote index in sessionStorage
         sessionStorage.setItem('lastQuoteIndex', lastViewedIndex);
     }
+}
     function exportQuotes() {
         const quotesJSON = JSON.stringify(quotes, null, 2);
         const blob = new Blob([quotesJSON], { type: "application/json" });
@@ -86,13 +87,13 @@ function addQuote(quoteText = randomQuote.value.trim(), save = true) {
         URL.revokeObjectURL(url);
         const exportButton = document.createElement("button");
 exportButton.textContent = "Export Quotes";
+};
 
-
-    }
+  
 
     // Event listeners
     
-};
+
 
 <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
 
