@@ -40,22 +40,22 @@ document.addEventListener("DOMContentLoaded", () => {
      // --- Server Syncing Functions ---
 
   // Function to fetch quotes from a simulated server (using JSONPlaceholder)
-  function fetchQuotesfromServer() {
+ async function fetchQuotesfromServer() {
     // For demonstration, we fetch 5 posts from JSONPlaceholder and map them to quote objects.
-    fetch("https://jsonplaceholder.typicode.com/posts?_limit=5")
-      .then(response => response.json())
-      .then(serverData => {
+    try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5");
+        const serverData = await response.json();
         const serverQuotes = serverData.map(post => ({
           text: post.title,
-          // For demo, use a substring of the body as the category:
           category: post.body.substring(0, 20)
         }));
         resolveConflicts(serverQuotes);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error("Error fetching server quotes:", error);
-      });
-  }
+      }
+    }
+    
+    
 
   // Function to resolve conflicts between server and local quotes
   function resolveConflicts(serverQuotes) {
