@@ -54,7 +54,22 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Error fetching server quotes:", error);
       }
     }
-    
+    async function postQuote(quote) {
+        try {
+          const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(quote)
+          });
+          const data = await response.json();
+          console.log("Quote posted to server:", data);
+          return data;
+        } catch (error) {
+          console.error("Error posting quote:", error);
+        }
+      }
     
 
   // Function to resolve conflicts between server and local quotes
@@ -245,12 +260,21 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('addQuoteButton').addEventListener('click', () => {
             const text = document.getElementById('quoteText').value;
             const category = document.getElementById('quoteCategory').value;
-            addQuote(text, category);
-            // Clear fields after adding
-            document.getElementById('quoteText').value = "";
-            document.getElementById('quoteCategory').value = "";
-        });
-    }
+            if (text && category) {
+                const newQuote = { text, category };
+                quotes.push(newQuote);
+                saveQuotes();
+                alert("Quote added successfully!");
+                document.getElementById("quoteText").value = "";
+                document.getElementById("quoteCategory").value = "";
+                populateCategories();
+                // --- Simulate Posting the New Quote to the Server ---
+                postQuote(newQuote);
+              } else {
+                alert("Please fill in both fields.");
+              }
+            });
+          }
 
     // Event listener for the "Show New Quote" button
     document.getElementById("newQuote").addEventListener("click", showRandomQuote);
