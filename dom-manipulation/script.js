@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
      // --- Server Syncing Functions ---
 
   // Function to fetch quotes from a simulated server (using JSONPlaceholder)
-  function fetchServerQuotes() {
+  function fetchQuotesfromServer() {
     // For demonstration, we fetch 5 posts from JSONPlaceholder and map them to quote objects.
     fetch("https://jsonplaceholder.typicode.com/posts?_limit=5")
       .then(response => response.json())
@@ -170,6 +170,11 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Quote added successfully!");
     }
 
+    function startServerSync() {
+        setInterval(fetchQuotesfromServer, 60000);  // Fetch every 60 seconds
+        fetchQuotesFromServer(); // And fetch immediately on load
+    }
+    
     // Function to export quotes as a JSON file
     function exportQuotes() {
         const quotesJSON = JSON.stringify(quotes, null, 2);
