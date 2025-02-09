@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Function to start periodic syncing with the server
-  function startServerSync() {
+  function syncQuotes() {
     // Fetch server quotes every 60 seconds (60000 ms)
     setInterval(fetchServerQuotes, 60000);
     // Also fetch once immediately on load
@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Quote added successfully!");
     }
 
-    function startServerSync() {
+    function syncQuotes() {
         setInterval(fetchQuotesfromServer, 60000);  // Fetch every 60 seconds
         fetchQuotesFromServer(); // And fetch immediately on load
     }
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }
-    startServerSync();
+    syncQuotes();
     // Function to import quotes from a JSON file
     function importFromJsonFile(event) {
         const fileReader = new FileReader();
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fileReader.readAsText(event.target.files[0]);
     }
 
-    function startServerSync() {
+    function syncQuotes() {
         // Fetch server quotes every 60 seconds
         setInterval(fetchServerQuotes, 60000);
         // Fetch once immediately on load
