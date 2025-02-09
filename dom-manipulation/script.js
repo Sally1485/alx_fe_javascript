@@ -203,7 +203,17 @@ document.addEventListener("DOMContentLoaded", () => {
         // Fetch once immediately on load
         fetchServerQuotes();
       }
-    });
+    
+
+    let importInput = document.getElementById("importFile");
+    if (!importInput) {
+      importInput = document.createElement("input");
+      importInput.type = "file";
+      importInput.id = "importFile";
+      importInput.accept = ".json";
+      document.body.appendChild(importInput);
+    }
+    importInput.addEventListener("change", importFromJsonFile);
 
     // Create Export Button
     const exportButton = document.createElement("button");
