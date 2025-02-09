@@ -9,7 +9,23 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
     const quoteDisplay = document.getElementById("quoteDisplay");
     const categoryFilter = document.getElementById("categoryFilter");
+    const newQuoteButton = document.getElementById("newQuote");
     let lastViewedIndex = parseInt(sessionStorage.getItem('lastQuoteIndex')) || 0;
+
+    function showConflictNotification(message) {
+        let notification = document.getElementById("conflictNotification");
+        if (!notification) {
+          notification = document.createElement("div");
+          notification.id = "conflictNotification";
+          notification.style.backgroundColor = "#ffdddd";
+          notification.style.border = "1px solid #ff0000";
+          notification.style.padding = "10px";
+          notification.style.margin = "10px 0";
+          // Insert at the top of the body
+          document.body.insertBefore(notification, document.body.firstChild);
+        }
+        notification.textContent = message;
+      }
 
     // Function to display a random quote
     function showRandomQuote() {
@@ -20,6 +36,61 @@ document.addEventListener("DOMContentLoaded", () => {
             <small>- ${randomQuote.category}</small>
         `;
     }
+
+     // --- Server Syncing Functions ---
+
+  // Function to fetch quotes from a simulated server (using JSONPlaceholder)
+  function fetchServerQuotes() {
+    // For demonstration, we fetch 5 posts from JSONPlaceholder and map them to quote objects.
+    fetch("https://jsonplaceholder.typicode.com/posts?_limit=5")
+      .then(response => response.json())
+      .then(serverData => {
+        const serverQuotes = serverData.map(post => ({
+          text: post.title,
+          // For demo, use a substring of the body as the category:
+          category: post.body.substring(0, 20)
+        }));
+        resolveConflicts(serverQuotes);
+      })
+      .catch(error => {
+        console.error("Error fetching server quotes:", error);
+      });
+  }
+
+  // Function to resolve conflicts between server and local quotes
+  function resolveConflicts(serverQuotes) {
+    // A simple conflict resolution: if the server data differs in length or content, update local data.
+    let conflictDetected = false;
+    if (serverQuotes.length !== quotes.length) {
+      conflictDetected = true;
+    } else {
+      for (let i = 0; i < serverQuotes.length; i++) {
+        if (
+          serverQuotes[i].text !== quotes[i].text ||
+          serverQuotes[i].category !== quotes[i].category
+        ) {
+          conflictDetected = true;
+          break;
+        }
+      }
+    }
+
+    if (conflictDetected) {
+      // Server data takes precedence.
+      quotes.splice(0, quotes.length, ...serverQuotes);
+      saveQuotes();
+      showConflictNotification("Server data has updated the quotes. Local data has been synced.");
+    }
+  }
+
+  // Function to start periodic syncing with the server
+  function startServerSync() {
+    // Fetch server quotes every 60 seconds (60000 ms)
+    setInterval(fetchServerQuotes, 60000);
+    // Also fetch once immediately on load
+    fetchServerQuotes();
+  }
+
 
     function filterQuotes() {
         const selectedCategory = categoryFilter.value;
@@ -113,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }
-
+    startServerSync();
     // Function to import quotes from a JSON file
     function importFromJsonFile(event) {
         const fileReader = new FileReader();
@@ -125,6 +196,14 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         fileReader.readAsText(event.target.files[0]);
     }
+
+    function startServerSync() {
+        // Fetch server quotes every 60 seconds
+        setInterval(fetchServerQuotes, 60000);
+        // Fetch once immediately on load
+        fetchServerQuotes();
+      }
+    });
 
     // Create Export Button
     const exportButton = document.createElement("button");
