@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
           // Insert at the top of the body
           document.body.insertBefore(notification, document.body.firstChild);
         }
-        notification.textContent = message;
+        notification.textContent = "Quotes synced with server!"
       }
 
     // Function to display a random quote
